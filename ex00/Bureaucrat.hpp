@@ -4,25 +4,25 @@
 #include <string>
 
 class Bureaucrat {
-private:
-  const std::string name;
-  int grade;
+  private:
+    const std::string name;
+    int grade;
 
-public:
-  Bureaucrat();
-  Bureaucrat(const std::string &name, int grade);
-  Bureaucrat(const Bureaucrat &other);
-  Bureaucrat &operator=(const Bureaucrat &other);
-  ~Bureaucrat();
+  public:
+    Bureaucrat();
+    Bureaucrat(const std::string &name, int grade);
+    Bureaucrat(const Bureaucrat &other);
+    Bureaucrat &operator=(const Bureaucrat &other);
+    ~Bureaucrat();
 
-  std::string getName() const;
-  int getGrade() const;
+    std::string getName() const;
+    int getGrade() const;
 
-  void incrementGrade();
-  void decrementGrade();
+    void incrementGrade();
+    void decrementGrade();
 
   class GradeTooHighException : public std::exception {
-  public:
+    public:
     const char *what() const noexcept;
   };
 
