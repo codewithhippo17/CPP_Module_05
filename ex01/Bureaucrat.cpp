@@ -1,5 +1,5 @@
 #include "Bureaucrat.hpp"
-
+#include "Form.hpp"
 // canonical form
 
 Bureaucrat::Bureaucrat() : name("Default"), grade(150) {}
@@ -56,4 +56,14 @@ const char *Bureaucrat::GradeTooHighException::what() const throw() {
 
 const char *Bureaucrat::GradeTooLowException::what() const throw() {
   return "Grade too low";
+}
+
+void Bureaucrat::signForm(Form &form) {
+  try {
+    form.beSigned(*this);
+    std::cout << this->name << " signed " << form.getName() << std::endl;
+  } catch (std::exception &e) {
+    std::cout << this->name << " couldn't sign " << form.getName()
+              << " because " << e.what() << std::endl;
+  }
 }
