@@ -1,29 +1,30 @@
+#ifndef FORM_HPP
+#define FORM_HPP
 
-#ifndef BUREAUCRAT_HPP
-#define BUREAUCRAT_HPP
-
+#include "Bureaucrat.hpp"
 #include <iostream>
 #include <string>
+
+class Bureaucrat;
 
 class Form {
 private:
   const std::string name;
   bool isSigned;
-  int gradeToExecute;
-  int gradeToSign;
+  const int gradeToSign;
+  const int gradeToExecute;
 
 public:
   Form();
-  Form(const std::string &name, int grade);
+  Form(const std::string &name, int gradeToSign, int gradeToExecute);
   Form(const Form &other);
   Form &operator=(const Form &other);
   ~Form();
 
   const std::string &getName() const;
-  int getGrade() const;
-
-  void incrementGrade();
-  void decrementGrade();
+  bool getIsSigned() const;
+  int getGradeToSign() const;
+  int getGradeToExecute() const;
 
   void beSigned(const Bureaucrat &bureaucrat);
 
@@ -38,6 +39,6 @@ public:
   };
 };
 
-std::ostream &operator<<(std::ostream &os, const Bureaucrat &b);
+std::ostream &operator<<(std::ostream &os, const Form &f);
 
-#endif // BUREAUCRAT_HPP
+#endif
