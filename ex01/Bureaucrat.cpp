@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
+
 // canonical form
 
 Bureaucrat::Bureaucrat() : name("Default"), grade(150) {}
