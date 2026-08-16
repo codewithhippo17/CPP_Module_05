@@ -5,3 +5,7 @@ bureaucrat
 Form
 *.pdf
 
+# LSP / editor config (machine-specific)
+.clangd
+compile_commands.json
+
