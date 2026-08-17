@@ -1,108 +1,64 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include <iostream>
 
 int main() {
-  std::cout << "=== VALID TEST ===" << std::endl;
-  try {
-    Bureaucrat b1("Abdul", 42);
-    std::cout << b1 << std::endl;
+  std::cout << "=== BUREAUCRAT SETUP ===" << std::endl;
+  Bureaucrat boss("The Boss", 1); // Can do everything
+  Bureaucrat midTier("Mid-Tier", 50); // Can sign Shrub/Robo, exec Shrub
+  Bureaucrat intern("Intern", 150); // Can do nothing
 
-    b1.incrementGrade();
-    std::cout << "After increment: " << b1 << std::endl;
+  std::cout << boss << std::endl;
+  std::cout << midTier << std::endl;
+  std::cout << intern << std::endl;
 
-    b1.decrementGrade();
-    std::cout << "After decrement: " << b1 << std::endl;
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== TOO HIGH TEST ===" << std::endl;
-  try {
-    Bureaucrat b2("Hippo", 0);
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== TOO LOW TEST ===" << std::endl;
-  try {
-    Bureaucrat b3("Simo", 151);
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== INCREMENT LIMIT TEST ===" << std::endl;
-  try {
-    Bureaucrat b4("Karim", 1);
-    std::cout << b4 << std::endl;
-
-    b4.incrementGrade();
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== DECREMENT LIMIT TEST ===" << std::endl;
-  try {
-    Bureaucrat b5("Qassem", 150);
-    std::cout << b5 << std::endl;
-
-    b5.decrementGrade();
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== FORM CREATION TEST ===" << std::endl;
-  try {
-    Form f1("Tax Form 28B", 50, 20);
-    std::cout << f1 << std::endl; 
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== SUCCESSFUL SIGNING TEST ===" << std::endl;
-  try {
-    Bureaucrat boss("The Boss", 1);
-    Form f2("Important Contract", 50, 20);
-    
-    std::cout << boss << std::endl;
-    std::cout << f2 << std::endl;
-
-    boss.signForm(f2);
-    
-    std::cout << f2 << std::endl;
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== FAILED SIGNING TEST ===" << std::endl;
-  try {
-    Bureaucrat intern("Intern", 150);
-    Form f3("Top Secret Document", 10, 5);
-    
-    std::cout << intern << std::endl;
-    std::cout << f3 << std::endl;
-
-    intern.signForm(f3);
-    
-    std::cout << f3 << std::endl;
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
-
-  std::cout << "\n=== FORM INVALID GRADES TEST ===" << std::endl;
-  try {
-    std::cout << "Trying to create a Form with gradeToSign = 0..." << std::endl;
-    Form invalidForm("Invalid", 0, 50);
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
+  std::cout << "\n=== SHRUBBERY CREATION FORM TESTS ===" << std::endl;
+  // Sign: 145, Exec: 137
+  ShrubberyCreationForm shrub("Garden");
   
-  try {
-    std::cout << "Trying to create a Form with gradeToExecute = 151..." << std::endl;
-    Form invalidForm2("Invalid2", 50, 151);
-  } catch (std::exception &e) {
-    std::cout << "Exception: " << e.what() << std::endl;
-  }
+  // Intern tries to sign (fails, grade 150 > 145)
+  intern.signForm(shrub);
+  
+  // Mid-Tier signs it (success, grade 50 <= 145)
+  midTier.signForm(shrub);
+  
+  // Intern tries to execute (fails, grade 150 > 137)
+  intern.executeForm(shrub);
+  
+  // Mid-Tier executes it (success, grade 50 <= 137)
+  midTier.executeForm(shrub);
+
+  std::cout << "\n=== ROBOTOMY REQUEST FORM TESTS ===" << std::endl;
+  // Sign: 72, Exec: 45
+  RobotomyRequestForm robo("Bender");
+  
+  // Mid-Tier signs it (success, grade 50 <= 72)
+  midTier.signForm(robo);
+  
+  // Mid-Tier tries to execute (fails, grade 50 > 45)
+  midTier.executeForm(robo);
+  
+  // Boss executes it (success, grade 1 <= 45)
+  // Run this a few times to see the 50% chance if implemented correctly
+  boss.executeForm(robo);
+  boss.executeForm(robo);
+  boss.executeForm(robo);
+
+  std::cout << "\n=== PRESIDENTIAL PARDON FORM TESTS ===" << std::endl;
+  // Sign: 25, Exec: 5
+  PresidentialPardonForm pardon("Arthur Dent");
+  
+  // Boss tries to execute before signing (fails, Not Signed Exception)
+  boss.executeForm(pardon);
+  
+  // Boss signs it
+  boss.signForm(pardon);
+  
+  // Boss executes it
+  boss.executeForm(pardon);
 
   return 0;
 }
