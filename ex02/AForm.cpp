@@ -1,8 +1,6 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
 
-// Orthodox Canonical Form
-
 AForm::AForm()
     : name("Default"), isSigned(false), gradeToSign(150), gradeToExecute(150) {}
 
@@ -52,7 +50,7 @@ void AForm::checkExecutionRequirements(const Bureaucrat &executor) const {
     throw GradeTooLowException();
 }
 
-// Exception what() methods
+// Exceptions
 
 const char *AForm::GradeTooHighException::what() const throw() {
   return "Form grade too high";
@@ -65,8 +63,6 @@ const char *AForm::GradeTooLowException::what() const throw() {
 const char *AForm::NotSignedException::what() const throw() {
   return "Form is not signed";
 }
-
-// Stream insertion operator
 
 std::ostream &operator<<(std::ostream &os, const AForm &f) {
   os << "Form: " << f.getName()

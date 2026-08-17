@@ -18,7 +18,7 @@ public:
   AForm(const std::string &name, int gradeToSign, int gradeToExecute);
   AForm(const AForm &other);
   AForm &operator=(const AForm &other);
-  virtual ~AForm(); // Must be virtual for an abstract base class!
+  virtual ~AForm();
 
   const std::string &getName() const;
   bool getIsSigned() const;
@@ -27,10 +27,8 @@ public:
 
   void beSigned(const Bureaucrat &bureaucrat);
   
-  // This pure virtual function makes the class Abstract!
   virtual void execute(Bureaucrat const & executor) const = 0;
   
-  // Helper function for derived classes to check execution requirements
   void checkExecutionRequirements(const Bureaucrat &executor) const;
 
   class GradeTooHighException : public std::exception {
