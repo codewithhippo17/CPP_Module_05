@@ -1,6 +1,5 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
-#include <iostream>
 
 int main() {
   std::cout << "=== VALID TEST ===" << std::endl;
