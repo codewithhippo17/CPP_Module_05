@@ -8,13 +8,16 @@ SRCS = Bureaucrat.cpp \
        ShrubberyCreationForm.cpp \
        RobotomyRequestForm.cpp \
        PresidentialPardonForm.cpp \
+			 Intern.cpp \
        main.cpp
 
 HEADERS = Bureaucrat.hpp \
           AForm.hpp \
           ShrubberyCreationForm.hpp \
           RobotomyRequestForm.hpp \
-          PresidentialPardonForm.hpp
+          PresidentialPardonForm.hpp \
+					Intern.hpp \
+
 
 OBJS = $(SRCS:.cpp=.o)
 
